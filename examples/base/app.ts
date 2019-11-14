@@ -1,5 +1,8 @@
 import axios from '../../src/index'
 
+/**
+ * params 配置检查
+ */
 // 参数是普通值
 axios({
   method: 'get',
@@ -78,4 +81,26 @@ axios({
   params: {
     bar: 'baz'
   }
+})
+
+/**
+ * data 配置检查
+ */
+// data 是一个普通对象
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+// data 是一个 Int32Array
+const arr = new Int32Array([21, 31])
+
+axios({
+  method: 'post',
+  url: '/base/buffer',
+  data: arr
 })
