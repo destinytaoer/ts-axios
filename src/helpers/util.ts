@@ -10,5 +10,5 @@ export function isObject(val: any): boolean {
 }
 // 是否是普通对象
 export function isPlainObject(val: any): val is Object {
-  return toString.call(val) === '[Object object]'
+  return toString.call(val) === '[object Object]'
 }
