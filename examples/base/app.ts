@@ -104,3 +104,40 @@ axios({
   url: '/base/buffer',
   data: arr
 })
+
+/**
+ * headers 配置检查
+ */
+// 无配置时
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+// 有配置时
+axios({
+  method: 'post',
+  url: '/base/post',
+  headers: {
+    'content-type': 'application/json',
+    Accept: 'application/json, text/plain, */*'
+  },
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+// data 是一个 URLSearchParams 对象, 浏览器会自动添加合适的 content-type
+const paramsString = 'q=URLUtils.searchParams&topic=api'
+const searchParams = new URLSearchParams(paramsString)
+
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: searchParams
+})
