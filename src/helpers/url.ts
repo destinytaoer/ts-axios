@@ -1,4 +1,4 @@
-import { isDate, isObject } from './util'
+import { isDate, isPlainObject } from './util'
 
 /**
  * encode: 实现对 URI 字符进行编码, 对部分编码的字符转换为原来的字符
@@ -44,7 +44,7 @@ export function buildURL(url: string, params?: any): string {
       // 对值进行类型判断
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       } else {
         // 其他值不做任何处理
