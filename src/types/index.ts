@@ -20,4 +20,18 @@ export interface AxiosRequestConfig {
   data?: any
   params?: any
   headers?: any
+  // 字面量类型: "" | "arraybuffer" | "blob" | "document" | "json" | "text"
+  responseType?: XMLHttpRequestResponseType
 }
+
+export interface AxiosResponse {
+  data: any
+  status: number
+  statusText: string
+  headers: any
+  config: AxiosRequestConfig
+  request: any
+}
+
+// 泛型是 resolve 的参数,即返回数据的类型
+export interface AxiosPromise extends Promise<AxiosResponse> {}
