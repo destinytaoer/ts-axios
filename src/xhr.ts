@@ -18,6 +18,10 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) return
+
+      // 网络错误或者超时错误, status 都为 0, 这两个错误在监听事件中处理
+      if (request.status === 0) return
+
       // 获取到的是一个字符串
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       const responseData = responseType !== 'text' ? request.response : request.responseText
@@ -51,5 +55,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     })
 
     request.send(data)
+
+    function handleResponse(response: AxiosResponse): void {
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(new Error(`Request failed with status code ${response.status}`))
+      }
+    }
   })
 }
