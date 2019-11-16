@@ -47,3 +47,30 @@ axios.post('/extend/post', { msg: 'post' })
 axios.put('/extend/put', { msg: 'put' })
 // axios.patch
 axios.patch('/extend/patch', { msg: 'patch' })
+
+// 测试响应数据泛型
+// 定义响应泛型接口
+interface ResponseData<T = any> {
+  code: number
+  result: T
+  message: string
+}
+// 定义 result 部分的接口类型
+interface User {
+  name: string
+  age: number
+}
+
+function getUser<T>() {
+  return axios<ResponseData<T>>('/extend/user')
+    .then(res => res.data)
+    .catch(err => console.log(err))
+}
+
+async function test() {
+  const user = await getUser<User>()
+  if (user) {
+    console.log(user.result.name)
+  }
+}
+test()
