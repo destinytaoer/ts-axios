@@ -36,3 +36,11 @@ export interface AxiosResponse {
 
 // 泛型是 resolve 的参数,即返回数据的类型
 export interface AxiosPromise extends Promise<AxiosResponse> {}
+
+export interface AxiosError extends Error {
+  isAxiosError: boolean
+  config: AxiosRequestConfig
+  code?: string | null
+  request?: any
+  response?: AxiosResponse
+}
