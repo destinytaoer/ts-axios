@@ -1,40 +1,15 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
-import xhr from './core/xhr'
-import { buildURL } from './helpers/url'
-import { transformRequest, transformResponse } from './helpers/data'
-import { processHeaders } from './helpers/headers'
-function axios(config: AxiosRequestConfig): AxiosPromise {
-  processConfig(config)
-  return xhr(config).then(res => {
-    return transformResponseData(res)
-  })
+import { AxiosInstance } from './types'
+import Axios from './core/Axios'
+import { extend } from './helpers/util'
+
+function createInstance(): AxiosInstance {
+  const context = new Axios()
+  // instance 是一个函数, 需要包含 get/post 等方法, 但是 Axios 中定义的 get 等方法需要用到 this, 所以需要 bind 这个 context, 否则 this 会是 request 函数本身
+  const instance = Axios.prototype.request.bind(context)
+  extend(instance, context)
+  return instance as AxiosInstance
 }
 
-function processConfig(config: AxiosRequestConfig): void {
-  config.url = transformURL(config)
-  // 先处理 headers
-  config.headers = transformHeaders(config)
-  config.data = transformData(config)
-}
-
-function transformURL(config: AxiosRequestConfig): string {
-  const { url, params } = config
-  return buildURL(url!, params)
-}
-
-function transformData(config: AxiosRequestConfig): any {
-  return transformRequest(config.data)
-}
-
-function transformHeaders(config: AxiosRequestConfig): any {
-  // headers 给一个默认的普通对象, 如果没有传递 headers, 默认使用 json 进行处理
-  const { headers = {}, data } = config
-  return processHeaders(headers, data)
-}
-
-function transformResponseData(res: AxiosResponse): AxiosResponse {
-  res.data = transformResponse(res.data)
-  return res
-}
+const axios = createInstance()
 
 export default axios
