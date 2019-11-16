@@ -8,10 +8,24 @@ axios({
     msg: 'hi'
   }
 })
+// 支持两个参数
+axios('/extend/post', {
+  method: 'post',
+  data: {
+    msg: 'hi'
+  }
+})
 
 // 利用 axios.request 方法发送请求, 本质上与 axios 方法一致
 axios.request({
   url: '/extend/post',
+  method: 'post',
+  data: {
+    msg: 'hello'
+  }
+})
+// 支持两个参数
+axios.request('/extend/post', {
   method: 'post',
   data: {
     msg: 'hello'
