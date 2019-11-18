@@ -14,8 +14,8 @@ app.use(
     publicPath: '/__build__/',
     stats: {
       colors: true,
-      chunks: false
-    }
+      chunks: false,
+    },
   })
 )
 
@@ -31,6 +31,7 @@ registerSimpleRouter()
 registerBaseRouter()
 registerErrorRouter()
 registerExtendRouter()
+registerInterceptorRouter()
 
 app.use(router)
 
@@ -42,7 +43,7 @@ module.exports = app.listen(port, () => {
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
     res.json({
-      msg: 'hello world'
+      msg: 'hello world',
     })
   })
 }
@@ -68,7 +69,7 @@ function registerErrorRouter() {
   router.get('/error/get', function(req, res) {
     if (Math.random() > 0.5) {
       res.json({
-        mag: 'hello world'
+        mag: 'hello world',
       })
     } else {
       res.status(500)
@@ -78,7 +79,7 @@ function registerErrorRouter() {
   router.get('/error/timeout', function(req, res) {
     setTimeout(() => {
       res.json({
-        msg: 'hello world'
+        msg: 'hello world',
       })
     }, 2000)
   })
@@ -111,8 +112,13 @@ function registerExtendRouter() {
       message: 'ok',
       result: {
         name: 'jack',
-        age: 18
-      }
+        age: 18,
+      },
     })
+  })
+}
+function registerInterceptorRouter() {
+  router.get('/interceptor/get', function(req, res) {
+    res.send('hello')
   })
 }
