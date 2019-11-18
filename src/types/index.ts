@@ -23,6 +23,9 @@ export interface AxiosRequestConfig {
   // 字面量类型: "" | "arraybuffer" | "blob" | "document" | "json" | "text"
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
+
   [propName: string]: any
 }
 
@@ -78,4 +81,8 @@ export interface ResolvedFn<T> {
 }
 export interface RejectedFn {
   (err: any): any
+}
+
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
 }
