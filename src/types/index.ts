@@ -23,6 +23,7 @@ export interface AxiosRequestConfig {
   // 字面量类型: "" | "arraybuffer" | "blob" | "document" | "json" | "text"
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+  [propName: string]: any
 }
 
 export interface AxiosResponse<T = any> {

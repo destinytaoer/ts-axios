@@ -1,4 +1,5 @@
-import { isPlainObject } from './util'
+import { isPlainObject, deepMerge } from './util'
+import { Method } from '../types'
 /**
  * normalizeHeaderName: 对 headers 中某个小写形式属性名, 转换为大写形式
  * @param headers
@@ -49,4 +50,23 @@ export function parseHeaders(headers: string): any {
     parsed[key] = val
   })
   return parsed
+}
+/**
+ * flatttenHeaders: 将 headers 中的 common/post/get 等属性进行平铺成一级
+ * @param headers
+ * @param method
+ */
+export function flattenHeaders(headers: any, method: Method): any {
+  if (!headers) return headers
+
+  // 合并需要的配置
+  headers = deepMerge(headers.common, headers[method], headers)
+  const methodsToDelete = ['get', 'post', 'put', 'delete', 'options', 'patch', 'head', 'common']
+
+  // 删除多余的属性
+  methodsToDelete.forEach(method => {
+    delete headers[method]
+  })
+
+  return headers
 }
