@@ -33,7 +33,10 @@
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "bash deploy.sh"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -130,6 +133,7 @@
     "tslint-loader": "^3.5.4",
     "typedoc": "^0.12.0",
     "typescript": "^3.7.2",
+    "vuepress": "^1.2.0",
     "webpack": "^4.28.4",
     "webpack-dev-middleware": "^3.5.0",
     "webpack-hot-middleware": "^2.24.3"
