@@ -176,3 +176,13 @@ instance1
   .then(res => {
     console.log(res)
   })
+
+/**
+ * 测试 baseURL
+ */
+const instance2 = axios.create({
+  baseURL: 'https://img.mukewang.com/'
+})
+
+instance2.get('5cc01a7b0001a33718720632.jpg')
+instance2.get('https://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
