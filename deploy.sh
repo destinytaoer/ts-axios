@@ -20,6 +20,6 @@ git commit -m 'update docs'
 # git push -f git@github.com:destinytaoer/destinytaoer.github.io.git master
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:destinytaoer/vue-wheel.git master:gh-pages
+git push -f git@github.com:destinytaoer/ts-axios.git master:gh-pages
 
 cd -
