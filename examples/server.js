@@ -14,8 +14,8 @@ app.use(
     publicPath: '/__build__/',
     stats: {
       colors: true,
-      chunks: false,
-    },
+      chunks: false
+    }
   })
 )
 
@@ -33,6 +33,7 @@ registerErrorRouter()
 registerExtendRouter()
 registerInterceptorRouter()
 registerConfigRouter()
+registerCancelRouter()
 
 app.use(router)
 
@@ -44,7 +45,7 @@ module.exports = app.listen(port, () => {
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
     res.json({
-      msg: 'hello world',
+      msg: 'hello world'
     })
   })
 }
@@ -70,7 +71,7 @@ function registerErrorRouter() {
   router.get('/error/get', function(req, res) {
     if (Math.random() > 0.5) {
       res.json({
-        mag: 'hello world',
+        mag: 'hello world'
       })
     } else {
       res.status(500)
@@ -80,7 +81,7 @@ function registerErrorRouter() {
   router.get('/error/timeout', function(req, res) {
     setTimeout(() => {
       res.json({
-        msg: 'hello world',
+        msg: 'hello world'
       })
     }, 2000)
   })
@@ -113,8 +114,8 @@ function registerExtendRouter() {
       message: 'ok',
       result: {
         name: 'jack',
-        age: 18,
-      },
+        age: 18
+      }
     })
   })
 }
@@ -126,5 +127,18 @@ function registerInterceptorRouter() {
 function registerConfigRouter() {
   router.post('/config/post', function(req, res) {
     res.json(req.body)
+  })
+}
+
+function registerCancelRouter() {
+  router.get('/cancel/get', function(req, res) {
+    setTimeout(() => {
+      res.json('hello')
+    }, 1000)
+  })
+  router.post('/cancel/post', function(req, res) {
+    setTimeout(() => {
+      res.json(req.body)
+    }, 1000)
   })
 }
