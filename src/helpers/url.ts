@@ -89,6 +89,25 @@ export function buildURL(
 }
 
 /**
+ * isAbsoluteURL: 判断 url 是否是一个绝对地址
+ * @param url
+ */
+export function isAbsoluteURL(url: string): boolean {
+  // 匹配 xxx:// 或者 // 开头
+  return /(^[a-z][a-z\d+\-\.]*:)?\/\//i.test(url)
+}
+
+/**
+ * combineURL: 拼接 baseURL 和 relativeURL
+ * @param baseURL
+ * @param relativeURL
+ */
+export function combineURL(baseURL: string, relativeURL?: string): string {
+  // 拼接时, 需要去掉 baseURL 末尾的 / 以及 relativeURL 开头的 /, 防止出现多个 /
+  return relativeURL ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '') : baseURL
+}
+
+/**
  * isURLSameOrigin: 判断请求 url 是否与当前的 host 是同源的
  * @param requestURL
  */
