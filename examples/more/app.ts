@@ -17,3 +17,12 @@ axios
   .then(res => {
     console.log(res)
   })
+
+const instance = axios.create({
+  xsrfCookieName: 'XSRF_TOKEN_D',
+  xsrfHeaderName: 'X_XSRF_TOKEN_D'
+})
+
+instance.get('/more/get').then(res => {
+  console.log(res)
+})

@@ -25,7 +25,13 @@ app.use(
 app.use(webpackHotMiddleware(compiler))
 
 // 开启静态服务器
-app.use(express.static(__dirname))
+app.use(
+  express.static(__dirname, {
+    setHeaders(res) {
+      res.cookie('XSRF_TOKEN_D', '1234abc')
+    }
+  })
+)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
