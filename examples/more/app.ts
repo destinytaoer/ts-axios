@@ -186,3 +186,40 @@ const instance2 = axios.create({
 
 instance2.get('5cc01a7b0001a33718720632.jpg')
 instance2.get('https://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
+
+/**
+ * 测试 axios.all axios.spread
+ */
+function getA() {
+  return axios.get('/more/A')
+}
+function getB() {
+  return axios.get('/more/B')
+}
+
+axios.all([getA(), getB()]).then(
+  axios.spread(function(resA, resB) {
+    console.log(resA)
+    console.log(resB)
+  })
+)
+axios.all([getA(), getB()]).then(([resA, resB]) => {
+  console.log(resA)
+  console.log(resB)
+})
+
+/**
+ * 测试 axios.getUri
+ */
+
+const config = {
+  baseURL: 'https://www.baidu.com',
+  url: '/user/123',
+  params: {
+    a: 1,
+    b: 2,
+    c: ['a', 'b']
+  }
+}
+
+console.log(axios.getUri(config))
