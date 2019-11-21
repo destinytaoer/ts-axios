@@ -1,7 +1,11 @@
 import axios from '../../src/index'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
+import qs from 'qs'
 
+/**
+ * 测试 withCredentials
+ */
 document.cookie = 'a=b'
 
 axios.get('/more/get').then(res => {
@@ -19,7 +23,9 @@ axios
   .then(res => {
     console.log(res)
   })
-
+/**
+ * 测试 XSRF
+ */
 const instance = axios.create({
   xsrfCookieName: 'XSRF_TOKEN_D',
   xsrfHeaderName: 'X_XSRF_TOKEN_D'
@@ -29,6 +35,9 @@ instance.get('/more/get').then(res => {
   console.log(res)
 })
 
+/**
+ * 测试上传下载
+ */
 const newInstance = axios.create()
 
 function calculatePercentage(loaded: number, total: number): number {
@@ -87,6 +96,9 @@ uploadEl.addEventListener('click', e => {
   }
 })
 
+/**
+ * 测试 HTTP Authorization
+ */
 axios
   .post(
     '/more/post',
@@ -102,6 +114,9 @@ axios
     console.log(res)
   })
 
+/**
+ * 测试 custom success status
+ */
 axios
   .get('/more/304')
   .then(res => {
@@ -122,4 +137,42 @@ axios
   })
   .catch(e => {
     console.log(e.message)
+  })
+
+/**
+ * 测试 custom paramsSerializer
+ */
+axios
+  .get('/more/get', {
+    params: new URLSearchParams('a=b&c=d')
+  })
+  .then(res => {
+    console.log(res)
+  })
+axios
+  .get('/more/get', {
+    params: {
+      a: 1,
+      b: 2,
+      c: ['a', 'b', 'c']
+    }
+  })
+  .then(res => {
+    console.log(res)
+  })
+const instance1 = axios.create({
+  paramsSerializer(params) {
+    return qs.stringify(params, { arrayFormat: 'brackets' })
+  }
+})
+instance1
+  .get('/more/get', {
+    params: {
+      a: 1,
+      b: 2,
+      c: ['a', 'b', 'c']
+    }
+  })
+  .then(res => {
+    console.log(res)
   })
