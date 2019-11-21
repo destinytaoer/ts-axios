@@ -2,6 +2,7 @@ import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import { parseHeaders } from '../helpers/headers'
 import { createError } from '../helpers/error'
 import { isURLSameOrigin } from '../helpers/url'
+import { isFormData } from '../helpers/util'
 import cookie from '../helpers/cookie'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
@@ -16,7 +17,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       cancelToken,
       withCredentials,
       xsrfCookieName,
-      xsrfHeaderName
+      xsrfHeaderName,
+      onDownloadProgress,
+      onUploadProgress
     } = config
     const request = new XMLHttpRequest()
 
@@ -61,6 +64,18 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED'))
     }
 
+    if (onDownloadProgress) {
+      request.onprogress = onDownloadProgress
+    }
+
+    if (onUploadProgress) {
+      request.upload.onprogress = onUploadProgress
+    }
+
+    // 如果是 FormData, 即上传文件的情况, 让浏览器自行设置其 Content-Type 为 multipart/xxxx; boundary=xxx
+    if (isFormData(data)) {
+      delete headers['Content-Type']
+    }
     if ((withCredentials || isURLSameOrigin(url!)) && xsrfCookieName) {
       const xsrfValue = cookie.read(xsrfCookieName)
       if (xsrfValue && xsrfHeaderName) {
