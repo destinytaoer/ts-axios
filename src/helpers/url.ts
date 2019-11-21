@@ -1,5 +1,10 @@
 import { isDate, isPlainObject } from './util'
 
+interface URLOrigin {
+  protocol: string
+  host: string
+}
+
 /**
  * encode: 实现对 URI 字符进行编码, 对部分编码的字符转换为原来的字符
  * @param val
@@ -68,4 +73,29 @@ export function buildURL(url: string, params?: any): string {
   }
 
   return url
+}
+
+/**
+ * isURLSameOrigin: 判断请求 url 是否与当前的 host 是同源的
+ * @param requestURL
+ */
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parseOrigin = resolveURL(requestURL)
+  return parseOrigin.protocol === curOrigin.protocol && parseOrigin.host === curOrigin.host
+}
+
+const urlParsingNode = document.createElement('a')
+const curOrigin = resolveURL(window.location.href)
+/**
+ * resolveURL: 解析 url, 获取其 protocol 和 host
+ * 创建 a 标签, 添加属性 href 为 url, 通过这个 a 标签元素即可获取到 protocol 和 host
+ * @param url
+ */
+function resolveURL(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url)
+  const { protocol, host } = urlParsingNode
+  return {
+    protocol,
+    host
+  }
 }

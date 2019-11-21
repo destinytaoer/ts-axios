@@ -11,6 +11,9 @@ const defaults: AxiosRequestConfig = {
     }
   },
 
+  xsrfCookieName: 'XSRF_TOKEN',
+  xsrfHeaderName: 'X_XSFR_TOKEN',
+
   transformRequest: [
     function(data: any, headers: any): any {
       processHeaders(headers, data)
