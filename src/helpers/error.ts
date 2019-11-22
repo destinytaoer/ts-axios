@@ -7,6 +7,8 @@ export class AxiosError extends Error {
   request?: any
   response?: AxiosResponse
 
+  // 这个注释是为了跳过测试 constructor
+  /* istanbul ignore next */
   constructor(
     message: string,
     config: AxiosRequestConfig,
