@@ -94,7 +94,7 @@ export function buildURL(
  */
 export function isAbsoluteURL(url: string): boolean {
   // 匹配 xxx:// 或者 // 开头
-  return /(^[a-z][a-z\d+\-\.]*:)?\/\//i.test(url)
+  return /^([a-z][a-z\d+\-\.]*:)?\/\//i.test(url)
 }
 
 /**
