@@ -36,7 +36,9 @@
     "travis-deploy-once": "travis-deploy-once",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "bash deploy.sh"
+    "docs:deploy": "sh deploy.sh",
+    "prepub": "npm run test:prod && npm run build",
+    "pub": "sh release.sh"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
